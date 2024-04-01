@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="settings">Настройки</system:String>
+    <system:String x:Key="selectOnDrawing">Выбрать на чертеже</system:String>
+    <system:String x:Key="linear">Линейные</system:String>
+    <system:String x:Key="blocks">Блоки</system:String>
+    <system:String x:Key="blockName">Имя блока</system:String>
+    <system:String x:Key="layer">Слой</system:String>
+    <system:String x:Key="scale">Масштаб</system:String>
+    <system:String x:Key="linetype">Тип линии</system:String>
+    <system:String x:Key="loadConfigFile">Загрузить файл конфигурации</system:String>
+    <system:String x:Key="saveConfigFile">Сохранить файл конфигурации</system:String>
+    <system:String x:Key="color">Цвет</system:String>
+</ResourceDictionary>

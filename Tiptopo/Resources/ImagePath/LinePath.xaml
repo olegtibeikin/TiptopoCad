@@ -1,0 +1,97 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Path x:Key="dashed"
+              Data="m5.4 39.8 8.4-8.4 2.8 2.8-8.4 8.4zM18.4 26.8l8.4-8.4 2.8 2.8-8.4 8.4zM31.4 13.8l8.4-8.4 2.8 2.8-8.4 8.4z" />
+
+
+    <Style x:Key="DashedPathStyle"
+               TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+                    Value="Uniform" />
+        <Setter Property="Data"
+                    Value="{Binding Data, Source={StaticResource dashed}}" />
+    </Style>
+
+    <Path x:Key="dashDotted"
+          Data="m5.4 39.8 8.4-8.4 2.8 2.8-8.4 8.4zM31.4 13.8l8.4-8.4 2.8 2.8-8.4 8.4zM24 21.172 21.172 24 24 26.828 26.828 24z" />
+
+
+    <Style x:Key="DashDottedPathStyle"
+           TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+                Value="Uniform" />
+        <Setter Property="Data"
+                Value="{Binding Data, Source={StaticResource dashDotted}}" />
+    </Style>
+
+    <Path x:Key="wall"
+      Data="M19.758 25.414 15.514 15.514 25.414 19.758 39.556 5.616 42.384 8.444 8.444 42.384 5.616 39.556z" />
+
+
+    <Style x:Key="WallPathStyle"
+       TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+            Value="Uniform" />
+        <Setter Property="Data"
+            Value="{Binding Data, Source={StaticResource wall}}" />
+    </Style>
+
+    <Path x:Key="bigStoneFence"
+      Data="M24 31.072 21.878 28.95 8.444 42.384 5.616 39.556 19.05 26.122 16.928 24 19.404 21.526 15.868 17.99 17.99 15.868 21.526 19.404 24 16.928 26.122 19.05 39.556 5.616 42.384 8.444 28.95 21.878 31.072 24z" />
+
+
+    <Style x:Key="BigStoneFencePathStyle"
+       TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+            Value="Uniform" />
+        <Setter Property="Data"
+            Value="{Binding Data, Source={StaticResource bigStoneFence}}" />
+    </Style>
+
+    <Path x:Key="continuous"
+          Data="M5.4 39.8 39.8 5.4 42.6 8.2 8.2 42.6Z" />
+
+
+    <Style x:Key="ContinuousPathStyle"
+           TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+                Value="Uniform" />
+        <Setter Property="Data"
+                Value="{Binding Data, Source={StaticResource continuous}}" />
+    </Style>
+
+    <Path x:Key="smallMetalFence"
+      Data="M18.344 26.828 21.172 29.656 8.444 42.384 5.616 39.556zM29.656 21.172 26.828 18.344 39.556 5.616 42.384 8.444zM24 24m6 0a6 6 90 11-12 0 6 6 90 1112 0" />
+
+
+    <Style x:Key="SmallMetalFencePathStyle"
+       TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+            Value="Uniform" />
+        <Setter Property="Data"
+            Value="{Binding Data, Source={StaticResource smallMetalFence}}" />
+    </Style>
+
+    <Path x:Key="bigMetalFence"
+      Data="M18.344 26.828 21.172 29.656 8.444 42.384 5.616 39.556zM29.656 21.172 26.828 18.344 39.556 5.616 42.384 8.444zM24 24m6 0a6 6 90 11-12 0 6 6 90 1112 0M20.456 19.042 19.042 20.456 14.8 16.214 16.214 14.8z" />
+
+
+    <Style x:Key="BigMetalFencePathStyle"
+   TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+        Value="Uniform" />
+        <Setter Property="Data"
+        Value="{Binding Data, Source={StaticResource bigMetalFence}}" />
+    </Style>
+
+    <Path x:Key="dotted"
+      Data="M9.858 35.314 7.03 38.142 9.858 40.97 12.686 38.142zM32.486 12.686 29.656 15.514 32.486 18.344 35.314 15.514zM38.142 7.03 35.314 9.858 38.142 12.686 40.97 9.858zM26.828 18.344 24 21.172 26.828 24 29.656 21.172zM21.172 24 18.344 26.828 21.172 29.656 24 26.828zM15.514 29.656 12.686 32.486 15.514 35.314 18.344 32.486z" />
+
+    <Style x:Key="DottedPathStyle"
+   TargetType="{x:Type Path}">
+        <Setter Property="Stretch"
+        Value="Uniform" />
+        <Setter Property="Data"
+        Value="{Binding Data, Source={StaticResource dotted}}" />
+    </Style>
+</ResourceDictionary>
