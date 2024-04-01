@@ -1,13 +1,15 @@
-﻿using Autodesk.AutoCAD.ApplicationServices;
-using Autodesk.AutoCAD.EditorInput;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Tiptopo.Model;
+#if NCAD
+using HostMgd.Windows;
+#else
 using Autodesk.AutoCAD.Windows;
+#endif
 
 namespace Tiptopo.ViewModel
 {
@@ -169,7 +171,7 @@ namespace Tiptopo.ViewModel
                         }
                         catch (Exception e)
                         {
-                            Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(e.Message + "\n" + e.StackTrace);
+                            utils.WriteMessage(e.Message + "\n" + e.StackTrace);
                         }
                         
                         mainWindow.Close();

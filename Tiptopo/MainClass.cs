@@ -1,13 +1,17 @@
 ﻿using System.Reflection;
 using System.IO;
-using Autodesk.AutoCAD.Runtime;
 using WF = System.Windows.Forms;
-using AS = Autodesk.AutoCAD.ApplicationServices;
 using Newtonsoft.Json;
 using Tiptopo.Model;
 using System.Threading;
-using System.Windows;
-using System;
+
+#if NCAD
+using Teigha.Runtime;
+using AS = HostMgd.ApplicationServices;
+#else
+using Autodesk.AutoCAD.Runtime;
+using AS = Autodesk.AutoCAD.ApplicationServices;
+#endif
 
 namespace Tiptopo
 {

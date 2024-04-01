@@ -1,9 +1,4 @@
-﻿using Autodesk.AutoCAD.ApplicationServices;
-using Autodesk.AutoCAD.Colors;
-using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.Geometry;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +6,23 @@ using System.Linq;
 using System.Reflection;
 using Tiptopo.Model;
 using Line = Tiptopo.Model.Line;
+using TiptopoLineType = Tiptopo.Model.LineType;
 using WF = System.Windows.Forms;
 using DColor = System.Drawing.Color;
+
+#if NCAD
+using HostMgd.ApplicationServices;
+using Teigha.Colors;
+using Teigha.DatabaseServices;
+using HostMgd.EditorInput;
+using Teigha.Geometry;
+#else
+using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.Colors;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.Geometry;
+#endif
 
 namespace Tiptopo
 {
@@ -23,6 +33,11 @@ namespace Tiptopo
         public Utils() 
         {
             editor = Application.DocumentManager.MdiActiveDocument.Editor;
+        }
+
+        public void WriteMessage(string message)
+        {
+            editor.WriteMessage(message);
         }
 
         public List<string> GetLineTypeList()
@@ -81,7 +96,7 @@ namespace Tiptopo
                                  .ToList();
             return distinctLines.Select(line =>
             {
-                var imageSource = Enum.GetName(typeof(LineType), line.type) + "PathStyle";
+                var imageSource = Enum.GetName(typeof(TiptopoLineType), line.type) + "PathStyle";
                 var colorRGB = $"#{(line.color & 0xFFFFFF):X6}";
                 return new LineItem { 
                     LineType = line.type,
@@ -300,7 +315,7 @@ namespace Tiptopo
                 BlockTableRecord tableRecord = tr.GetObject(blockTable[BlockTableRecord.ModelSpace],
                     OpenMode.ForWrite) as BlockTableRecord;
 
-                using (Autodesk.AutoCAD.DatabaseServices.Polyline polyline = new Autodesk.AutoCAD.DatabaseServices.Polyline())
+                using (Polyline polyline = new Polyline())
                 {
                     bool closed = points.First() == points.Last();
                     foreach (Point2d point in points)

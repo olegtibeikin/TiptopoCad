@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tiptopo.Model
+﻿namespace Tiptopo.Model
 {
     public class Vertex
     {

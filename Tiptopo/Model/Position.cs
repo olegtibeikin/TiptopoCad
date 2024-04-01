@@ -1,4 +1,8 @@
-﻿using Autodesk.AutoCAD.Geometry;
+﻿#if NCAD
+using Teigha.Geometry;
+#else
+using Autodesk.AutoCAD.Geometry;
+#endif
 
 namespace Tiptopo.Model
 {

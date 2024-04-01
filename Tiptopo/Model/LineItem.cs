@@ -1,8 +1,11 @@
-﻿using Autodesk.AutoCAD.Colors;
-using Autodesk.AutoCAD.Internal;
-using Newtonsoft.Json;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+
+#if NCAD
+using Teigha.Colors;
+#else
+using Autodesk.AutoCAD.Colors;
+#endif
 
 namespace Tiptopo.Model
 {
