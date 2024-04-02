@@ -137,8 +137,11 @@ namespace Tiptopo
                 DoActionWithinTransaction((tr, db) =>
                 {
                     var layerTable = (LayerTable)tr.GetObject(db.LayerTableId, OpenMode.ForRead);
-                    var ltr = (LayerTableRecord)tr.GetObject(layerTable[layerName], OpenMode.ForRead);
-                    color = ltr.Color;
+                    if (layerTable.Has(layerName))
+                    {
+                        var ltr = (LayerTableRecord)tr.GetObject(layerTable[layerName], OpenMode.ForRead);
+                        color = ltr.Color;
+                    }
                 });
             }
             return "#" + color.ColorValue.R.ToString("X2") + color.ColorValue.G.ToString("X2") + color.ColorValue.B.ToString("X2");

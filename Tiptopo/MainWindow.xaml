@@ -15,19 +15,33 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Secondary/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="Resources\ImagePath\LinePath.xaml" />
                 <ResourceDictionary Source="Resources\StringResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
-        <materialDesign:Card DockPanel.Dock="Top">
+        <ToolBar DockPanel.Dock="Top" Background="{StaticResource MaterialDesign.Brush.Primary}" Padding="0 10 0 10">
+            <Button Content="{DynamicResource loadConfigFile}" 
+                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}" 
+                    Command="{Binding GetItemsCommand}"
+                    Margin="0 0 20 0"/>
+            <Button Content="{DynamicResource saveConfigFile}" 
+                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                    Command="{Binding SaveItemsCommand}"
+                    Margin="0 0 20 0"/>
+            <Button Content="{DynamicResource draw}"
+                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                    Command="{Binding DrawAllCommand}" />
+
+        </ToolBar>
+        <materialDesign:Card>
             <TabControl
                         HorizontalContentAlignment="Left"
-                        Style="{StaticResource MaterialDesignFilledTabControl}">
+                        Style="{StaticResource MaterialDesignTabControl}">
                 <TabItem Header="{DynamicResource linear}">
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
@@ -115,7 +129,7 @@
                             <Button Content="{DynamicResource selectOnDrawing}" 
                                     HorizontalAlignment="Center"
                                     Command="{Binding PickEntityCommand}" 
-                                    Style="{StaticResource MaterialDesignFlatAccentBgButton}"/>
+                                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"/>
 
                         </StackPanel>
                     </Grid>
@@ -193,30 +207,10 @@
                             <Button Content="{DynamicResource selectOnDrawing}" 
                                     HorizontalAlignment="Center"
                                     Command="{Binding PickBlockCommand}"
-                                    Style="{StaticResource MaterialDesignFlatAccentBgButton}"/>
+                                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"/>
 
                         </StackPanel>
                     </Grid>
-                </TabItem>
-                <TabItem Header="{DynamicResource settings}" >
-                    <StackPanel HorizontalAlignment="Center" 
-                                VerticalAlignment="Center" 
-                                Margin="10">
-                        <Button Content="{DynamicResource loadConfigFile}" 
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}" 
-                                Command="{Binding GetItemsCommand}"
-                                Margin="0 0 0 10" />
-                        <Button Content="{DynamicResource saveConfigFile}" 
-                                Style="{StaticResource MaterialDesignFlatAccentBgButton}"
-                                Command="{Binding SaveItemsCommand}"
-                                Margin="0 0 0 10"/>
-                        <Button Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-                                Command="{Binding DrawAllCommand}">
-                            <materialDesign:PackIcon Height="24" 
-                                                     Width="24"
-                                                     Kind="Play" />
-                        </Button>
-                    </StackPanel>
                 </TabItem>
             </TabControl>
         </materialDesign:Card>

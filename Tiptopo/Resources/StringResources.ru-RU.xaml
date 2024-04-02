@@ -12,4 +12,5 @@
     <system:String x:Key="loadConfigFile">Загрузить файл конфигурации</system:String>
     <system:String x:Key="saveConfigFile">Сохранить файл конфигурации</system:String>
     <system:String x:Key="color">Цвет</system:String>
+    <system:String x:Key="draw">Нарисовать</system:String>
 </ResourceDictionary>

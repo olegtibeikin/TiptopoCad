@@ -12,4 +12,5 @@
     <system:String x:Key="loadConfigFile">Load config file</system:String>
     <system:String x:Key="saveConfigFile">Save config file</system:String>
     <system:String x:Key="color">Color</system:String>
+    <system:String x:Key="draw">Draw</system:String>
 </ResourceDictionary>
