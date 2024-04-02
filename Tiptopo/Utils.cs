@@ -217,26 +217,27 @@ namespace Tiptopo
         {
             ItemsModel items = null;
             WF.OpenFileDialog fileDialog = new WF.OpenFileDialog();
-            fileDialog.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
+            fileDialog.Filter = "tconfig files (*.tconfig)|*.tconfig|All files (*.*)|*.*";
             var result = fileDialog.ShowDialog();
             if (result == WF.DialogResult.OK)
             {
                 try
                 {
                     items = JsonConvert.DeserializeObject<ItemsModel>(File.ReadAllText(fileDialog.FileName));
+                    return items;
                 }
                 catch
                 {
                     Application.ShowAlertDialog("Ошибка чтения файла!");
                 }
             }
-            return items;
+            return null;
         }
 
         public void SaveItems(ItemsModel items)
         {
             WF.SaveFileDialog fileDialog = new WF.SaveFileDialog();
-            fileDialog.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
+            fileDialog.Filter = "tconfig files (*.tconfig)|*.tconfig|All files (*.*)|*.*";
             var result = fileDialog.ShowDialog();
             if (result == WF.DialogResult.OK)
             {

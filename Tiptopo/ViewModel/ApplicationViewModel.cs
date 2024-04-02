@@ -130,6 +130,8 @@ namespace Tiptopo.ViewModel
                     (getItemsCommand = new RelayCommand(obj =>
                     {
                         var items = utils.GetItems();
+                        if (items == null) return;
+
                         var lineList = Lines.ToList();
                         lineList.ForEach(line =>
                         {

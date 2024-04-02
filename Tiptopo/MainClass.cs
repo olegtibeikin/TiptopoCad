@@ -26,6 +26,7 @@ namespace Tiptopo
             Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Microsoft.Xaml.Behaviors.dll"));
 
             WF.OpenFileDialog fileDialog = new WF.OpenFileDialog();
+            fileDialog.Filter = "json files (*.json)|*.json|All files (*.*)|*.*";
             var result = fileDialog.ShowDialog();
 
             if (result == WF.DialogResult.OK)

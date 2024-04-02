@@ -16,8 +16,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Secondary/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Secondary/MaterialDesignColor.Indigo.xaml" />
                 <ResourceDictionary Source="Resources\ImagePath\LinePath.xaml" />
                 <ResourceDictionary Source="Resources\StringResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -26,15 +26,15 @@
     <DockPanel>
         <ToolBar DockPanel.Dock="Top" Background="{StaticResource MaterialDesign.Brush.Primary}" Padding="0 10 0 10">
             <Button Content="{DynamicResource loadConfigFile}" 
-                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}" 
+                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" 
                     Command="{Binding GetItemsCommand}"
                     Margin="0 0 20 0"/>
             <Button Content="{DynamicResource saveConfigFile}" 
-                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
                     Command="{Binding SaveItemsCommand}"
                     Margin="0 0 20 0"/>
             <Button Content="{DynamicResource draw}"
-                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
                     Command="{Binding DrawAllCommand}" />
 
         </ToolBar>
@@ -129,7 +129,7 @@
                             <Button Content="{DynamicResource selectOnDrawing}" 
                                     HorizontalAlignment="Center"
                                     Command="{Binding PickEntityCommand}" 
-                                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"/>
+                                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"/>
 
                         </StackPanel>
                     </Grid>
@@ -207,7 +207,7 @@
                             <Button Content="{DynamicResource selectOnDrawing}" 
                                     HorizontalAlignment="Center"
                                     Command="{Binding PickBlockCommand}"
-                                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"/>
+                                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"/>
 
                         </StackPanel>
                     </Grid>
