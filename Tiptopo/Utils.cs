@@ -265,7 +265,7 @@ namespace Tiptopo
             });
             tiptopo.lines.ForEach(line =>
             {
-                var lineItem = lineItems.FirstOrDefault(x => x.LineType == line.type) ?? new LineItem();
+                var lineItem = lineItems.FirstOrDefault(x => x.LineType == line.type && x.TiptopoColor == $"#{(line.color & 0xFFFFFF):X6}") ?? new LineItem();
                 AddLine(line, tiptopo.measurements, lineItem);
             });
             tiptopo.texts.ForEach(mapText => 
@@ -331,7 +331,7 @@ namespace Tiptopo
                     polyline.LinetypeScale = lineItem.LineTypeScale;
                     polyline.Linetype = lineItem.LineTypeName;
                     polyline.Plinegen = true;
-                    polyline.Color = Color.FromColor(DColor.FromArgb((int)line.color));
+                    polyline.Color = lineItem.AcadColor;
                     var notePosition = new Point3d(points.First().X, points.First().Y, 0.0);
                     AddNote(notePosition, line.note);
 
@@ -362,7 +362,7 @@ namespace Tiptopo
                     spline.Layer = lineItem.LayerName;
                     spline.LinetypeScale = lineItem.LineTypeScale;
                     spline.Linetype = lineItem.LineTypeName;
-                    spline.Color = Color.FromColor(DColor.FromArgb((int)line.color));
+                    spline.Color = lineItem.AcadColor;
 
                     var notePosition = new Point3d(points.First().X, points.First().Y, 0.0);
                     AddNote(notePosition, line.note);
@@ -402,7 +402,7 @@ namespace Tiptopo
                     arc.Layer = lineItem.LayerName;
                     arc.LinetypeScale = lineItem.LineTypeScale;
                     arc.Linetype = lineItem.LineTypeName;
-                    arc.Color = Color.FromColor(DColor.FromArgb((int)line.color));
+                    arc.Color = lineItem.AcadColor;
                     var notePosition = new Point3d(points.First().X, points.First().Y, 0.0);
                     AddNote(notePosition, line.note);
 
@@ -431,7 +431,7 @@ namespace Tiptopo
                     circle.Layer = lineItem.LayerName;
                     circle.LinetypeScale = lineItem.LineTypeScale;
                     circle.Linetype = lineItem.LineTypeName;
-                    circle.Color = Color.FromColor(DColor.FromArgb((int)line.color));
+                    circle.Color = lineItem.AcadColor;
                     var notePosition = new Point3d(points.First().X, points.First().Y, 0.0);
                     AddNote(notePosition, line.note);
 
