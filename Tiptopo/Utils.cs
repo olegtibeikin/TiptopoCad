@@ -224,6 +224,22 @@ namespace Tiptopo
                 try
                 {
                     items = JsonConvert.DeserializeObject<ItemsModel>(File.ReadAllText(fileDialog.FileName));
+                    DoActionWithinTransaction((tr, db) =>
+                    {
+                        var layerTable = (LayerTable)tr.GetObject(db.LayerTableId, OpenMode.ForRead);
+                        var lineTypeTable = (LinetypeTable)tr.GetObject(db.LinetypeTableId, OpenMode.ForRead);
+                        items.LineItems = items.LineItems.Select(line =>
+                        {
+                            if (!layerTable.Has(line.LayerName)) line.LayerName = "0";
+                            if (!lineTypeTable.Has(line.LineTypeName)) line.LineTypeName = "ByLayer";
+                            return line;
+                        }).ToList();
+                        items.BlockItems = items.BlockItems.Select(block =>
+                        {
+                            if (!layerTable.Has(block.LayerName)) block.LayerName = "0";
+                            return block;
+                        }).ToList();
+                    });
                     return items;
                 }
                 catch
