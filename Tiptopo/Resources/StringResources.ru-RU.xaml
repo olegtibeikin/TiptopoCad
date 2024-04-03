@@ -13,4 +13,7 @@
     <system:String x:Key="saveConfigFile">Сохранить файл конфигурации</system:String>
     <system:String x:Key="color">Цвет</system:String>
     <system:String x:Key="draw">Нарисовать</system:String>
+    <system:String x:Key="you_must_select_block">Необходимо выбрать блок!</system:String>
+    <system:String x:Key="error_reading_file">Ошибка чтения файла!</system:String>
+    <system:String x:Key="error">Ошибка!</system:String>
 </ResourceDictionary>

@@ -9,6 +9,8 @@ using Line = Tiptopo.Model.Line;
 using TiptopoLineType = Tiptopo.Model.LineType;
 using WF = System.Windows.Forms;
 using DColor = System.Drawing.Color;
+using W = System.Windows;
+
 
 #if NCAD
 using HostMgd.ApplicationServices;
@@ -158,7 +160,7 @@ namespace Tiptopo
             return Color.FromRgb((byte)r, (byte)g, (byte)b);
         }
 
-        public EntityProperties PickBlock()
+        public EntityProperties PickBlock(W.Window window)
         {
             EntityProperties entityProperties = null;
 
@@ -184,7 +186,7 @@ namespace Tiptopo
                     }
                     else if (result.Status == PromptStatus.Error)
                     {
-                        Application.ShowAlertDialog("Необходимо выбрать блок!");
+                        Application.ShowAlertDialog(window.FindResource("you_must_select_block").ToString());
                     }
                     else
                     {
@@ -213,7 +215,7 @@ namespace Tiptopo
             .ToList();
         }
 
-        public ItemsModel GetItems()
+        public ItemsModel GetItems(W.Window window)
         {
             ItemsModel items = null;
             WF.OpenFileDialog fileDialog = new WF.OpenFileDialog();
@@ -244,7 +246,7 @@ namespace Tiptopo
                 }
                 catch
                 {
-                    Application.ShowAlertDialog("Ошибка чтения файла!");
+                    Application.ShowAlertDialog(window.FindResource("error_reading_file").ToString());
                 }
             }
             return null;
@@ -264,7 +266,7 @@ namespace Tiptopo
                 }
                 catch
                 {
-                    Application.ShowAlertDialog("Ошибка!");
+                    Application.ShowAlertDialog("Error!");
                 }
             }
         }

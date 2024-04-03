@@ -24,20 +24,25 @@
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
-        <ToolBar DockPanel.Dock="Top" Background="{StaticResource MaterialDesign.Brush.Primary}" Padding="0 10 0 10">
+        <DockPanel DockPanel.Dock="Top"  Margin="20 10 20 10">
             <Button Content="{DynamicResource loadConfigFile}" 
-                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" 
+                    DockPanel.Dock="Left"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}" 
                     Command="{Binding GetItemsCommand}"
                     Margin="0 0 20 0"/>
             <Button Content="{DynamicResource saveConfigFile}" 
-                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
                     Command="{Binding SaveItemsCommand}"
                     Margin="0 0 20 0"/>
-            <Button Content="{DynamicResource draw}"
-                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                    Command="{Binding DrawAllCommand}" />
+            <Button HorizontalAlignment="Right"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                    Command="{Binding DrawAllCommand}">
+                <materialDesign:PackIcon Height="24" 
+                         Width="24"
+                         Kind="Play" />
+            </Button>
 
-        </ToolBar>
+        </DockPanel>
         <materialDesign:Card>
             <TabControl
                         HorizontalContentAlignment="Left"

@@ -13,4 +13,7 @@
     <system:String x:Key="saveConfigFile">Save config file</system:String>
     <system:String x:Key="color">Color</system:String>
     <system:String x:Key="draw">Draw</system:String>
+    <system:String x:Key="you_must_select_block">You must select block!</system:String>
+    <system:String x:Key="error_reading_file">Error reading file!</system:String>
+    <system:String x:Key="error">Error!</system:String>
 </ResourceDictionary>

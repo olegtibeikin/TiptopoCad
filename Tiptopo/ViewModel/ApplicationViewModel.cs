@@ -109,7 +109,7 @@ namespace Tiptopo.ViewModel
                     (pickBlockCommand = new RelayCommand(obj =>
                     {
                         mainWindow.Hide();
-                        var prop = utils.PickBlock();
+                        var prop = utils.PickBlock(mainWindow);
                         if(SelectedBlock != null && prop != null)
                         {
                             SelectedBlock.LayerName = prop.LayerName;
@@ -129,7 +129,7 @@ namespace Tiptopo.ViewModel
                 return getItemsCommand ??
                     (getItemsCommand = new RelayCommand(obj =>
                     {
-                        var items = utils.GetItems();
+                        var items = utils.GetItems(mainWindow);
                         if (items == null) return;
 
                         var lineList = Lines.ToList();
