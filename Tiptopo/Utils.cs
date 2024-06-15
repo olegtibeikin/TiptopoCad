@@ -10,16 +10,17 @@ using TiptopoLineType = Tiptopo.Model.LineType;
 using WF = System.Windows.Forms;
 using DColor = System.Drawing.Color;
 using W = System.Windows;
-
+using System.Threading;
+using System.Windows.Forms;
 
 #if NCAD
-using HostMgd.ApplicationServices;
+using AS = HostMgd.ApplicationServices;
 using Teigha.Colors;
 using Teigha.DatabaseServices;
 using HostMgd.EditorInput;
 using Teigha.Geometry;
 #else
-using Autodesk.AutoCAD.ApplicationServices;
+using AS = Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
@@ -34,7 +35,7 @@ namespace Tiptopo
 
         public Utils() 
         {
-            editor = Application.DocumentManager.MdiActiveDocument.Editor;
+            editor = AS.Application.DocumentManager.MdiActiveDocument.Editor;
         }
 
         public void WriteMessage(string message)
@@ -186,7 +187,7 @@ namespace Tiptopo
                     }
                     else if (result.Status == PromptStatus.Error)
                     {
-                        Application.ShowAlertDialog(window.FindResource("you_must_select_block").ToString());
+                        AS.Application.ShowAlertDialog(window.FindResource("you_must_select_block").ToString());
                     }
                     else
                     {
@@ -246,7 +247,7 @@ namespace Tiptopo
                 }
                 catch
                 {
-                    Application.ShowAlertDialog(window.FindResource("error_reading_file").ToString());
+                    AS.Application.ShowAlertDialog(window.FindResource("error_reading_file").ToString());
                 }
             }
             return null;
@@ -266,16 +267,45 @@ namespace Tiptopo
                 }
                 catch
                 {
-                    Application.ShowAlertDialog("Error!");
+                    AS.Application.ShowAlertDialog("Error!");
                 }
             }
         }
 
         public void DrawAll(TiptopoModel tiptopo, List<LineItem> lineItems, List<BlockItem> blockItems)
         {
+            var adjustedCoordinates = GetAdjustedCoordinates();
+            int adjustedCounter = 0;
+
+            if (adjustedCoordinates != null)
+            {
+                foreach (var measurement in tiptopo.measurements) {
+                    if (measurement.hasStation && adjustedCoordinates.ContainsKey(measurement.name))
+                    {
+                        measurement.position = adjustedCoordinates[measurement.name];
+                        adjustedCounter++;
+                    }
+                }
+                switch (Thread.CurrentThread.CurrentCulture.ToString())
+                {
+                    case "ru-RU":
+                        AS.Application.ShowAlertDialog($"Заменено {adjustedCounter} координат.");
+                        break;
+                    default:
+                        AS.Application.ShowAlertDialog($"{adjustedCounter} coordinates replaced.");
+                        break;
+                }
+            }
+
+
+
             if (tiptopo == null) { return; }
             tiptopo.measurements.ForEach(measurement => { 
                 Point3d point3D = measurement.position.toPoint3d();
+
+                if(measurement.hasStation && adjustedCoordinates != null && adjustedCoordinates.ContainsKey(measurement.name))
+                {
+                }
                 var pointColor = measurement.isMeasured ? Color.FromColor(DColor.FromArgb((int)measurement.color)) : Color.FromColor(DColor.Red);
                 AddPoint(point3D, measurement.name, measurement.note, pointColor);
                 var blockItem = blockItems.FirstOrDefault(x => x.PointType == measurement.type && x.Code == measurement.code);
@@ -294,6 +324,59 @@ namespace Tiptopo
             {
                 AddMapText(mapText);
             });
+        }
+
+        private Dictionary<string, Position> GetAdjustedCoordinates()
+        {
+            DialogResult dialogResult;
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "ru-RU":
+                    dialogResult = WF.MessageBox.Show("Выбрать файл с уравненными координатами?", "Координаты тахеометрии", WF.MessageBoxButtons.YesNo);
+                    break;
+                default:
+                    dialogResult = WF.MessageBox.Show("Select a file with adjusted coordinates?", "Total Station survey coordinates", WF.MessageBoxButtons.YesNo);
+                    break;
+            }
+
+            if (dialogResult == DialogResult.No) return null;
+
+            WF.OpenFileDialog fileDialog = new WF.OpenFileDialog();
+            fileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            var result = fileDialog.ShowDialog();
+
+            if (result == WF.DialogResult.OK)
+            {
+                try
+                {
+                    var coordDict = File.ReadAllText(fileDialog.FileName)
+                    .Split('\n')
+                    .Where(line => !string.IsNullOrWhiteSpace(line))
+                    .Select(line => line.Split(','))
+                    .ToDictionary(x => x[0], x => new Position{
+                        x = Double.Parse(x[2]),
+                        y = Double.Parse(x[1]),
+                        z = Double.Parse(x[3])});
+
+                    return coordDict;
+                } catch {
+                    switch (Thread.CurrentThread.CurrentCulture.ToString())
+                    {
+                        case "ru-RU":
+                            AS.Application.ShowAlertDialog("Ошибка чтения файла!");
+                            break;
+                        default:
+                            AS.Application.ShowAlertDialog("Error reading file!");
+                            break;
+                    }
+
+                    return null;
+                }
+                
+
+                
+            } 
+            else return null;
         }
 
         private void AddLine(Line line, List<Measurement> measurements, LineItem lineItem)
@@ -649,7 +732,7 @@ namespace Tiptopo
 
         private void DoActionWithinTransaction(Action<Transaction, Database> action)
         {
-            Document doc = Application.DocumentManager.MdiActiveDocument;
+            AS.Document doc = AS.Application.DocumentManager.MdiActiveDocument;
             if (doc == null)
             {
                 return;
@@ -657,7 +740,7 @@ namespace Tiptopo
 
             Database db = doc.Database;
 
-            using (DocumentLock docloc = doc.LockDocument())
+            using (AS.DocumentLock docloc = doc.LockDocument())
             {
                 using (Transaction trans = doc.TransactionManager.StartTransaction())
                 {
