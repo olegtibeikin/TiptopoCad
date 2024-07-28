@@ -207,7 +207,6 @@ namespace Tiptopo
 
             return measurements.Select(measurement => new { measurement.type, measurement.code })
                 .Distinct()
-                .Where(pair => pair.type != PointType.Point)
             .Select(pair =>
             {
                 var imageSource = Path.Combine(imgDirectoryPath, Enum.GetName(typeof(PointType), pair.type) + ".png");
