@@ -391,27 +391,30 @@ namespace Tiptopo
 
             if (points.Count <= 1) return;
 
-            switch(line.form)
+            if(points.Count >= 3)
             {
-                case LineForm.Circle:
-                    {
-                        AddCircle(line, points, lineItem);
-                        return;
-                    }
-                case LineForm.Spline:
-                    {
-                        AddSpline(line, points, lineItem);
-                        return;
-                    }
-                case LineForm.Arc:
-                    { 
-                        AddArc(line, points, lineItem);
-                        return;
-                    }
-                default:
-                    break;
+                switch (line.form)
+                {
+                    case LineForm.Circle:
+                        {
+                            AddCircle(line, points, lineItem);
+                            return;
+                        }
+                    case LineForm.Spline:
+                        {
+                            AddSpline(line, points, lineItem);
+                            return;
+                        }
+                    case LineForm.Arc:
+                        {
+                            AddArc(line, points, lineItem);
+                            return;
+                        }
+                    default:
+                        break;
+                }
             }
-
+            
             DoActionWithinTransaction((tr, db) =>
             {
                 BlockTable blockTable = tr.GetObject(db.BlockTableId,
