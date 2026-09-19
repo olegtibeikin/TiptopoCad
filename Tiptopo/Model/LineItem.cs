@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Teigha.Colors;
 #else
 using Autodesk.AutoCAD.Colors;
+using Newtonsoft.Json;
 #endif
 
 namespace Tiptopo.Model
@@ -13,6 +14,7 @@ namespace Tiptopo.Model
     public class LineItem : INotifyPropertyChanged
     {
         private LineType lineType;
+        private string imageSource;
         private string tiptopoColor;
         private Color acadColor;
         private string acadColorHexRGB;
@@ -28,6 +30,16 @@ namespace Tiptopo.Model
             set { 
                 lineType = value;
                 OnPropertyChanged("LineType");
+            }
+        }
+        [JsonIgnore]
+        public string ImageSource
+        {
+            get { return imageSource; }
+            set
+            {
+                imageSource = value;
+                OnPropertyChanged("ImageSource");
             }
         }
         public string TiptopoColor

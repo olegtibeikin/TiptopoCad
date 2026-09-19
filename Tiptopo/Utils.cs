@@ -12,6 +12,8 @@ using DColor = System.Drawing.Color;
 using W = System.Windows;
 using System.Threading;
 using System.Windows.Forms;
+using System.Web.UI;
+
 
 #if NCAD
 using AS = HostMgd.ApplicationServices;
@@ -94,21 +96,46 @@ namespace Tiptopo
 
         public List<LineItem> GetLineItems(List<Line> lines)
         {
-            var distinctLines = lines.GroupBy(l => new { l.color, l.type })
-                                 .Select(g => g.First())
-                                 .ToList();
+            string path = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            string dllDirectoryPath = Path.GetDirectoryName(path);
+            string imgDirectoryPath = Path.Combine(dllDirectoryPath, "img");
+
+            var distinctLines = lines.GroupBy(l => new {
+                color = (int)l.color,
+                l.type
+            })
+                    .Select(g => g.First())
+                    .ToList();
+
             return distinctLines.Select(line =>
             {
-                var imageSource = Enum.GetName(typeof(TiptopoLineType), line.type) + "PathStyle";
+                var imageSource = Path.Combine(imgDirectoryPath, Enum.GetName(typeof(LineType), line.type) + ".png");
                 var colorRGB = $"#{(line.color & 0xFFFFFF):X6}";
                 return new LineItem { 
                     LineType = line.type,
                     TiptopoColor  = colorRGB,
-                    AcadColor = GetAcadColorFromHexRGB(colorRGB)
+                    AcadColor = GetAcadColorFromHexRGB(colorRGB),
+                    ImageSource = imageSource
                     
             };
             }
             ).ToList();
+        }
+
+        public List<BlockItem> GetBlockItems(List<Measurement> measurements)
+        {
+            string path = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            string dllDirectoryPath = Path.GetDirectoryName(path);
+            string imgDirectoryPath = Path.Combine(dllDirectoryPath, "img");
+
+            return measurements.Select(measurement => new { measurement.type, measurement.code })
+                .Distinct()
+            .Select(pair =>
+            {
+                var imageSource = Path.Combine(imgDirectoryPath, Enum.GetName(typeof(PointType), pair.type) + ".png");
+                return new BlockItem { PointType = pair.type, Code = pair.code, ImageSource = imageSource };
+            })
+            .ToList();
         }
 
         public EntityProperties PickEntity()
@@ -197,22 +224,6 @@ namespace Tiptopo
             });
 
             return entityProperties;
-        }
-
-        public List<BlockItem> GetBlockItems(List<Measurement> measurements)
-        {
-            string path = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
-            string dllDirectoryPath = Path.GetDirectoryName(path);
-            string imgDirectoryPath = Path.Combine(dllDirectoryPath, "img");
-
-            return measurements.Select(measurement => new { measurement.type, measurement.code })
-                .Distinct()
-            .Select(pair =>
-            {
-                var imageSource = Path.Combine(imgDirectoryPath, Enum.GetName(typeof(PointType), pair.type) + ".png");
-                return new BlockItem { PointType = pair.type, Code = pair.code, ImageSource = imageSource };
-            })
-            .ToList();
         }
 
         public ItemsModel GetItems(W.Window window)

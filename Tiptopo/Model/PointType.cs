@@ -16,6 +16,14 @@
         Tree,
         TreeConifer,
         Hatchway,
-        Grid
+        Grid,
+        Bush,
+        CablePointer,
+        CellTower,
+        KilometerSign,
+        TrafficPointer,
+        LampWood,
+        LampDwarf,
+        PostWood
     }
 }

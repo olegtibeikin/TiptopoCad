@@ -9,6 +9,9 @@
         SmallMetalFence,
         BigMetalFence,
         Wall,
-        BigStoneFence
+        BigStoneFence,
+        WoodFence,
+        GridFence,
+        Slope
     }
 }

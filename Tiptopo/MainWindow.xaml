@@ -11,14 +11,11 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <local:PathStyleConverter x:Key="PathStyleConverter"/>
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Secondary/MaterialDesignColor.Lime.xaml" />
-                <ResourceDictionary Source="Resources\ImagePath\LinePath.xaml" />
                 <ResourceDictionary Source="Resources\StringResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -70,7 +67,9 @@
                                 <DataTemplate>
                                     <StackPanel Margin="0">
                                         <DockPanel Margin="0">
-                                            <Path Style="{Binding Path=LineType, Converter={StaticResource PathStyleConverter}, ConverterParameter={x:Reference Name=MainWindowName}}" Fill="{Binding Path=TiptopoColor}" Margin="0 0 10 0"/>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Image MaxHeight="40" MaxWidth="40" Source="{Binding ImageSource}" Margin="0 0 20 0" />
+                                            </StackPanel>
                                             <StackPanel VerticalAlignment="Center">
                                                 <TextBlock Text="{DynamicResource linetype}" Style="{StaticResource MaterialDesignCharacterCounterTextBlock}" />
                                                 <TextBlock Text="{Binding Path=LineTypeName}" Margin="0 0 0 5" />
