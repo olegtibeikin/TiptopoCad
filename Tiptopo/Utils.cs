@@ -346,34 +346,38 @@ namespace Tiptopo
 
             if (result == WF.DialogResult.OK)
             {
+                var lineCount = 0;
                 try
                 {
                     var coordDict = File.ReadAllText(fileDialog.FileName)
                     .Split('\n')
                     .Where(line => !string.IsNullOrWhiteSpace(line))
                     .Select(line => line.Split(','))
-                    .ToDictionary(x => x[0], x => new Position{
-                        x = Double.Parse(x[2]),
-                        y = Double.Parse(x[1]),
-                        z = Double.Parse(x[3])});
-
+                    .ToDictionary(x => x[0], x =>
+                    {
+                        lineCount++;
+                        return new Position
+                        {
+                            x = Double.Parse(x[2]),
+                            y = Double.Parse(x[1]),
+                            z = Double.Parse(x[3])
+                        };
+                    }
+                    );
                     return coordDict;
                 } catch {
                     switch (Thread.CurrentThread.CurrentCulture.ToString())
                     {
                         case "ru-RU":
-                            AS.Application.ShowAlertDialog("Ошибка чтения файла!");
+                            AS.Application.ShowAlertDialog("Ошибка чтения файла! Строка " + lineCount);
                             break;
                         default:
-                            AS.Application.ShowAlertDialog("Error reading file!");
+                            AS.Application.ShowAlertDialog("Error reading file! Line " + lineCount);
                             break;
                     }
 
                     return null;
                 }
-                
-
-                
             } 
             else return null;
         }
